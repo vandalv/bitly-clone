@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: changelog/V1_create_schema.sql
+  - include:
+      file: changelog/V2_create_links_table.sql

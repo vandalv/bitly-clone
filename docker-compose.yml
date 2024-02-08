@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${ENV_DB}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5433:5432"
+
+  application:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: host.docker.internal
+      ENV_DB: ${ENV_DB}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8737:8737"
+    volumes:
+      - ./build/libs/bitly-clone-0.0.1-SNAPSHOT.jar:/path/to/container/bitly-clone-0.0.1-SNAPSHOT.jar
